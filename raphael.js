@@ -5004,12 +5004,19 @@ window.Raphael.vml && function (R) {
             return this._.transform;
         }
         var vbs = this.paper._viewBoxShift,
-            vbt = vbs ? "s" + [vbs.scale, vbs.scale] + "-1-1t" + [vbs.dx, vbs.dy] : E,
+            vbt = vbs ? "s" + [vbs.scale, vbs.scale] + ",-1,-1t" + [vbs.dx, vbs.dy] : E,
             oldt;
         if (vbs) {
             oldt = tstr = Str(tstr).replace(/\.{3}|\u2026/g, this._.transform || E);
         }
-        R._extractTransform(this, vbt + tstr);
+        if(!this.fvb && vbt != "") {
+          this.fvb = vbt;
+        }
+        var trsfrm = vbt + tstr;
+        if (this.fvb && tstr === this.fvb) {
+          trsfrm = vbt;
+        }
+        R._extractTransform(this, trsfrm);
         var matrix = this.matrix.clone(),
             skew = this.skew,
             o = this.node,
