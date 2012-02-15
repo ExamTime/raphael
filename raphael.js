@@ -5024,7 +5024,7 @@ window.Raphael.vml && function (R) {
             isGrad = ~Str(this.attrs.fill).indexOf("-"),
             isPatt = !Str(this.attrs.fill).indexOf("url(");
         matrix.translate(-.5, -.5);
-        if (isPatt || isGrad || this.type == "image") {
+        if (isPatt || isGrad) {
             skew.matrix = "1 0 0 1";
             skew.offset = "0 0";
             split = matrix.split();
