@@ -7,13 +7,8 @@ Additional javascript files (minified and modules) removed to minimise maintenan
 
 Fixes
 =====
-- Fix for dragging text. Bug references:
-  Issue reference: https://github.com/DmitryBaranovskiy/raphael/issues/328
-  Code adapted from: https://github.com/vitorhsb/raphael/commit/168a90edbaacf8615b31dc2cde164a8dd41b50ca
-- Fix for IE7/8 VML viewbox issues
-  Bug references:
-  https://github.com/DmitryBaranovskiy/raphael/issues/376
-  https://github.com/DmitryBaranovskiy/raphael/issues/468
+- Fix for dragging text. Issue reference: https://github.com/DmitryBaranovskiy/raphael/issues/328 | Code adapted from: https://github.com/vitorhsb/raphael/commit/168a90edbaacf8615b31dc2cde164a8dd41b50ca
+- Fix for IE7/8 VML viewbox issues. Bug references: https://github.com/DmitryBaranovskiy/raphael/issues/376 | https://github.com/DmitryBaranovskiy/raphael/issues/468
 - Fix for image element positioning when using viewbox in IE7/8 (VML).
   
 How to Use
