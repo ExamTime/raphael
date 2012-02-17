@@ -14,7 +14,7 @@ Fixes
 How to Use
 ===========
 Add the following to your GemFile: 
-`gem 'raphael-examtime'
+`gem 'raphael-examtime', :git => 'git@github.com:ExamTime/raphael.git'`
 
 Then add the following to your application.js manifest:
 `//= require raphael`
