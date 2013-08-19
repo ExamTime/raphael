@@ -52,7 +52,7 @@
      = (object) array of returned values from the listeners
     \*/
         eve = function (name, scope) {
-			name = String(name);
+      name = String(name);
             var e = events,
                 oldstop = stop,
                 args = Array.prototype.slice.call(arguments, 2),
@@ -112,8 +112,8 @@
             current_event = ce;
             return out.length ? out : null;
         };
-		// Undocumented. Debug only.
-		eve._events = events;
+    // Undocumented. Debug only.
+    eve._events = events;
     /*\
      * eve.listeners
      [ method ]
@@ -178,15 +178,15 @@
      | eve.on("mouse", scream);
      | eve.on("mouse", catchIt)(1);
      * This will ensure that `catchIt()` function will be called before `eatIt()`.
-	 *
+   *
      * If you want to put your handler before non-indexed handlers, specify a negative value.
      * Note: I assume most of the time you don’t need to worry about z-index, but it’s nice to have this feature “just in case”.
     \*/
     eve.on = function (name, f) {
-		name = String(name);
-		if (typeof f != "function") {
-			return function () {};
-		}
+    name = String(name);
+    if (typeof f != "function") {
+      return function () {};
+    }
         var names = name.split(separator),
             e = events;
         for (var i = 0, ii = names.length; i < ii; i++) {
@@ -209,23 +209,23 @@
      [ method ]
      **
      * Returns function that will fire given event with optional arguments.
-	 * Arguments that will be passed to the result function will be also
-	 * concated to the list of final arguments.
- 	 | el.onclick = eve.f("click", 1, 2);
- 	 | eve.on("click", function (a, b, c) {
- 	 |     console.log(a, b, c); // 1, 2, [event object]
- 	 | });
+   * Arguments that will be passed to the result function will be also
+   * concated to the list of final arguments.
+   | el.onclick = eve.f("click", 1, 2);
+   | eve.on("click", function (a, b, c) {
+   |     console.log(a, b, c); // 1, 2, [event object]
+   | });
      > Arguments
-	 - event (string) event name
-	 - varargs (…) and any other arguments
-	 = (function) possible event handler function
+   - event (string) event name
+   - varargs (…) and any other arguments
+   = (function) possible event handler function
     \*/
-	eve.f = function (event) {
-		var attrs = [].slice.call(arguments, 1);
-		return function () {
-			eve.apply(null, [event, null].concat(attrs).concat([].slice.call(arguments, 0)));
-		};
-	};
+  eve.f = function (event) {
+    var attrs = [].slice.call(arguments, 1);
+    return function () {
+      eve.apply(null, [event, null].concat(attrs).concat([].slice.call(arguments, 0)));
+    };
+  };
     /*\
      * eve.stop
      [ method ]
@@ -272,7 +272,7 @@
      [ method ]
      **
      * Removes given function from the list of event listeners assigned to given name.
-	 * If no arguments specified all the events will be cleared.
+   * If no arguments specified all the events will be cleared.
      **
      > Arguments
      **
@@ -286,10 +286,10 @@
      * See @eve.off
     \*/
     eve.off = eve.unbind = function (name, f) {
-		if (!name) {
-		    eve._events = events = {n: {}};
-			return;
-		}
+    if (!name) {
+        eve._events = events = {n: {}};
+      return;
+    }
         var names = name.split(separator),
             e,
             key,
@@ -389,7 +389,7 @@
     // AMD support
     if (typeof define === "function" && define.amd) {
         // Define as an anonymous module
-        define(["."], function( eve ) {
+        define(["eve"], function( eve ) {
             return factory(glob, eve);
         });
     } else {
@@ -2361,7 +2361,7 @@
                 p2 = path2 && pathToAbsolute(path2),
                 attrs = {x: 0, y: 0, bx: 0, by: 0, X: 0, Y: 0, qx: null, qy: null},
                 attrs2 = {x: 0, y: 0, bx: 0, by: 0, X: 0, Y: 0, qx: null, qy: null},
-                processPath = function (path, d) {
+                processPath = function (path, d, pcom) {
                     var nx, ny;
                     if (!path) {
                         return ["C", d.x, d.y, d.x, d.y, d.x, d.y];
@@ -2376,13 +2376,25 @@
                             path = ["C"][concat](a2c[apply](0, [d.x, d.y][concat](path.slice(1))));
                             break;
                         case "S":
-                            nx = d.x;
-                            ny = d.y;
+                            if (pcom == "C" || pcom == "S") { // In "S" case we have to take into account, if the previous command is C/S.
+                                nx = d.x * 2 - d.bx;          // And reflect the previous
+                                ny = d.y * 2 - d.by;          // command's control point relative to the current point.
+                            }
+                            else {                            // or some else or nothing
+                                nx = d.x;
+                                ny = d.y;
+                            }
                             path = ["C", nx, ny][concat](path.slice(1));
                             break;
                         case "T":
-                            d.qx = d.x;
-                            d.qy = d.y;
+                            if (pcom == "Q" || pcom == "T") { // In "T" case we have to take into account, if the previous command is Q/T.
+                                d.qx = d.x * 2 - d.qx;        // And make a reflection similar
+                                d.qy = d.y * 2 - d.qy;        // to case "S".
+                            }
+                            else {                            // or something else or nothing
+                                d.qx = d.x;
+                                d.qy = d.y;
+                            }
                             path = ["C"][concat](q2c(d.x, d.y, d.qx, d.qy, path[1], path[2]));
                             break;
                         case "Q":
@@ -7590,6 +7602,7 @@
           trsfrm = vbt;
         }
         R._extractTransform(this, trsfrm);
+
         var matrix = this.matrix.clone(),
             skew = this.skew,
             o = this.node,
