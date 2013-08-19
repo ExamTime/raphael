@@ -8,6 +8,7 @@ Additional javascript files (minified and modules) removed to minimise maintenan
 Fixes
 =====
 - Fix for IE7/8 VML viewbox issues. Bug references: https://github.com/DmitryBaranovskiy/raphael/issues/376 | https://github.com/DmitryBaranovskiy/raphael/issues/468
+- Fix for ```pcom``` undefined error in IE8: https://github.com/DmitryBaranovskiy/raphael/issues/766
 
 How to Use
 ===========
