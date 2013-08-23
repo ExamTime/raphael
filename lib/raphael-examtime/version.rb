@@ -1,5 +1,5 @@
 module Raphael
   module Examtime
-    VERSION = "2.1.12e"
+    VERSION = "2.1.13e"
   end
 end

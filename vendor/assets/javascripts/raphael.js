@@ -7494,6 +7494,9 @@
             }
             res.textpath.style["v-text-kern"] = true;
         }
+        if (o.type == "image") {
+          o.transform("...");
+        }
         // res.paper.canvas.style.display = E;
     },
     addGradientFill = function (o, gradient, fill) {
